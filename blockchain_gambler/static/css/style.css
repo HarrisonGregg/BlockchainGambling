@@ -1,0 +1,79 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+body {
+	background: #C8D3D5;
+	font-family: 'Montserrat', sans-serif;
+}
+.centerbox {
+	width: 400px;
+	/*height: 400px;*/
+	/*margin: -200px 0 0 -150px;*/
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	border-radius: 8px;
+	background: #6E8387;
+	box-sizing: border-box;
+	padding: 50px;
+	left: 50%;
+	top: 50%;
+	position: absolute;
+
+	color: #FCFAFA;
+}
+.centerbox form {
+	margin: 50px 0;
+}
+h1 {
+	text-align: center;
+	margin: 0;
+	font-size: 24px;
+}
+.btn {
+	background: #0CCA4A;
+	border: none;
+	padding: 10px;
+	text-align: center;
+	font-weight: bold;
+	cursor: pointer;
+	font-size: 20px;
+	border-top: 2px solid #A4B8C4;
+	color: #FCFAFA;
+}
+.btn.gray {
+	background: #A4B8C4;
+	margin-top: 20px;
+	color: #FCFAFA;
+	border-radius: 5px;
+}
+.input-div {
+	margin: 20px 0;
+}
+.input-div:first-child {
+	margin: 0;
+}
+input {
+	padding: 10px;
+	text-align: center;
+	width: 100%;
+	-webkit-appearance: none;
+	appearance: none;
+	border: 2px solid #A4B8C4;
+	border-bottom: none;
+	font-size: 20px;
+	background: #FCFAFA;
+}
+input:first-of-type {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+input:last-of-type {
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+a {
+	text-decoration: initial;
+	color: initial;
+}
+.mybitbet {
+	color: #0CCA4A;
+}

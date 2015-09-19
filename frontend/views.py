@@ -7,7 +7,9 @@ from .forms import SigninForm, SignupForm
 # Create your views here.
 
 def signin(request):
-	return render(request, 'frontend/signin.html', context_instance=RequestContext(request, {form: SigninForm}))
+	form = SigninForm()
+	return render(request, 'frontend/signin.html', context_instance=RequestContext(request, {form: form}))
 
 def signup(request):
-	return render(request, 'frontend/signup.html', context_instance=RequestContext(request, {}))
+	form = SignupForm()
+	return render(request, 'frontend/signup.html', context_instance=RequestContext(request, {form: form}))

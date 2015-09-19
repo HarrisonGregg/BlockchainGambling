@@ -1,12 +1,12 @@
-from django.forms import Form
+from django import forms
 
-class SigninForm(Form):
-    username = CharField()
-    password = PasswordField()
+class SigninForm(forms.Form):
+    username = forms.CharField()
+    # password = forms.PasswordField()
 
 
-class SignupForm(Form):
-    username = CharField()
-    email = EmailField()
-    password = PasswordField()
-    password2 = PasswordField()
+class SignupForm(forms.Form):
+    username = forms.CharField()
+    email = forms.EmailField()
+    # password = forms.PasswordField()
+    # password2 = forms.PasswordField()
