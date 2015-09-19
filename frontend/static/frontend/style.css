@@ -62,11 +62,18 @@ input {
 	font-size: 20px;
 	background: #FCFAFA;
 }
-input:first-of-type {
+select {
+	padding: 10px;
+	width: 100%;
+	font-size: 20px;
+	border: 2px solid #A4B8C4;
+	border-bottom: none;
+}
+form .inputs > *:first-child {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 }
-input:last-of-type {
+form .inputs > *:last-child {
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 }
@@ -76,4 +83,9 @@ a {
 }
 .mybitbet {
 	color: #0CCA4A;
+}
+.error {
+	background: #FC2523;
+	color: #FCFAFA;
+	text-align: center;
 }

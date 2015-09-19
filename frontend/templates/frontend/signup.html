@@ -8,12 +8,13 @@
 		<h1 class="title">
 			Join <span class="mybitbet">MyBitBet</span>
 		</h1>
-		<form>
-			<input type="email" placeholder="Email"/>
-			<input type="text" placeholder="Username"/>
-			<input type="password" placeholder="Password"/>
-			<input type="password" placeholder="Re-type Password"/>
-			<input type="submit" value="Sign Up" class="signup-btn btn"/>
+		<form method="post">
+			<p>{% csrf_token %}</p>
+			<div class="inputs">
+			    {{ form }}
+				<input type="submit" value="Sign Up" class="signup-btn btn"/>
+			</div>
+			<div class="error">{{ error }}</div>
 		</form>
 		<a href="/">
 			<div class="signin-btn btn gray">

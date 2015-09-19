@@ -7,19 +7,25 @@
 <body>
 	<div class="centerbox">
 		<h1 class="title">
-			Welcome to <span class="mybitbet">MyBitBet</span>
+			Hi {{user.username}}. 
+			<br>
+			Would you like to place a bet?
 		</h1>
 		<form method="post">
 			<p>{% csrf_token %}</p>
 			<div class="inputs">
 			    {{ form }}
-				<input type="submit" value="Sign In" class="signin-btn btn"/>
+<!-- 				<select name="headsortails">
+					<option value="heads">Heads</option>
+					<option value="tails">Tails</option>
+				</select> -->
+				<input type="submit" value="Place Bet" class="placebet-btn btn"/>
 			</div>
 			<div class="error">{{ error }}</div>
 		</form>
-		<a href="/signup/">
+		<a href="/logout/">
 			<div class="signup-btn btn gray">
-				Sign Up
+				Logout
 			</div>
 		</a>
 	</div>
