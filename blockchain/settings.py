@@ -37,7 +37,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'frontend',
     'blockchain_gambler'
 )
 
@@ -57,7 +56,7 @@ ROOT_URLCONF = 'blockchain.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'blockchain_gambler/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

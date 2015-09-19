@@ -17,8 +17,6 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^$', 'frontend.views.signin', name='signin'),
-
     url(r'', include('blockchain_gambler.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
