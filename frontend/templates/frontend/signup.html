@@ -1,0 +1,25 @@
+<html>
+<head>
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'frontend/style.css' %}">
+</head>
+<body>
+	<div class="centerbox">
+		<h1 class="title">
+			Join <span class="mybitbet">MyBitBet</span>
+		</h1>
+		<form>
+			<input type="email" placeholder="Email"/>
+			<input type="text" placeholder="Username"/>
+			<input type="password" placeholder="Password"/>
+			<input type="password" placeholder="Re-type Password"/>
+			<input type="submit" value="Sign Up" class="signup-btn btn"/>
+		</form>
+		<a href="/">
+			<div class="signin-btn btn gray">
+				Sign In
+			</div>
+		</a>
+	</div>
+</body>
+</html>

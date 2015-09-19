@@ -2,21 +2,23 @@
 <head>
 	{% load staticfiles %}
 	<link rel="stylesheet" href="{% static 'frontend/style.css' %}">
+	<!-- <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> -->
 </head>
 <body>
 	<div class="centerbox">
 		<h1 class="title">
-			Welcome to MyBitBet
+			Welcome to <span class="mybitbet">MyBitBet</span>
 		</h1>
-		<div class="input-div username">
+		<form>
 			<input type="text" placeholder="Username"/>
-		</div>
-		<div class="input-div password">
 			<input type="text" placeholder="Password"/>
-		</div>
-		<div class="signin-btn btn">
-			Sign In
-		</div>
+			<input type="submit" value="Sign In" class="signin-btn btn"/>
+		</form>
+		<a href="/signup/">
+			<div class="signup-btn btn gray">
+				Sign Up
+			</div>
+		</a>
 	</div>
 </body>
 </html>

@@ -18,6 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^$', 'frontend.views.signin', name='signin'),
+    url(r'^signup/$', 'frontend.views.signup', name='signup'),
 
     url(r'', include('blockchain_gambler.urls')),
     url(r'^admin/', include(admin.site.urls)),
