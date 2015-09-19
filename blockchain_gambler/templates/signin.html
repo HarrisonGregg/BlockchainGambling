@@ -2,20 +2,16 @@
 <head>
 	{% load staticfiles %}
 	<link rel="stylesheet" href="{% static 'frontend/style.css' %}">
-	<!-- <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> -->
 </head>
 <body>
 	<div class="centerbox">
 		<h1 class="title">
 			Welcome to <span class="mybitbet">MyBitBet</span>
 		</h1>
-		<form method="post">
-			<p>{% csrf_token %}</p>
-			<div class="inputs">
-			    {{ form }}
-				<input type="submit" value="Sign In" class="signin-btn btn"/>
-			</div>
-			<div class="error">{{ error }}</div>
+		<form>
+			<input type="text" placeholder="Username"/>
+			<input type="text" placeholder="Password"/>
+			<input type="submit" value="Sign In" class="signin-btn btn"/>
 		</form>
 		<a href="/signup/">
 			<div class="signup-btn btn gray">
