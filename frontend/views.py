@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import render
 from django.template import RequestContext
-from .forms import SigninForm, SignupForm, BetForm
+from .forms import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
@@ -18,6 +18,11 @@ def bet(request):
 def logout_view(request):
 	logout(request)
 	return HttpResponseRedirect("/")
+
+def start(request):
+	error = ""
+	form = StartForm(auto_id=False)
+	return render(request, 'frontend/start.html', context_instance=RequestContext(request, {'form':form, 'error':error}))
 
 def signin(request):
 	error = ""

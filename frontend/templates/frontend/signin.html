@@ -1,13 +1,24 @@
 <html>
 <head>
 	{% load staticfiles %}
+	<link rel="icon" type="image/png" sizes="16x16" href="{% static 'frontend/favicon.png' %}">
 	<link rel="stylesheet" href="{% static 'frontend/style.css' %}">
 	<!-- <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> -->
+	<title>FundLeague - Sign In</title>
 </head>
 <body>
 	<div class="centerbox">
+		<div class="goal">
+			<div class="top">
+			</div>
+			<br>
+			<div class="bottom">
+			</div>
+		</div>
 		<h1 class="title">
-			Welcome to <span class="mybitbet">MyBitBet</span>
+			Welcome to 
+			<br>
+			<span class="fundleague">Fund League</span>
 		</h1>
 		<form method="post">
 			<p>{% csrf_token %}</p>
@@ -19,7 +30,12 @@
 		</form>
 		<a href="/signup/">
 			<div class="signup-btn btn gray">
-				Sign Up
+				Join a League
+			</div>
+		</a>
+		<a href="/start/">
+			<div class="start-btn btn gray">
+				Start a League
 			</div>
 		</a>
 	</div>
