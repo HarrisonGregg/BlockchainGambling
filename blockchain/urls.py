@@ -18,6 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^$', 'frontend.views.signin', name='signin'),
+    url(r'^start/$', 'frontend.views.start', name='start'),
     url(r'^signup/$', 'frontend.views.signup', name='signup'),
     url(r'^bet/$', 'frontend.views.bet', name='bet'),
     url(r'^logout/$', 'frontend.views.logout_view', name='logout'),

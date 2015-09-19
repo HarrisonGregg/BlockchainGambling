@@ -2,12 +2,18 @@ from django import forms
 
 class SigninForm(forms.Form):
 	auto_id = False 
+	league_name = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': 'League Name'}))
 	username = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': 'Username'}))
 	password = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
 
+class StartForm(forms.Form):
+	auto_id = False 
+	name = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': 'League Name'}))
+	fee = forms.DecimalField(label="",decimal_places=2,widget=forms.NumberInput(attrs={'placeholder': 'Entree Fee', 'min': '0.01', 'step': '0.01'}))
 
 class SignupForm(forms.Form):
 	auto_id = False 
+	league_name = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': 'League Name'}))
 	username = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': 'Username'}))
 	email = forms.EmailField(label="", widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
 	password = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
