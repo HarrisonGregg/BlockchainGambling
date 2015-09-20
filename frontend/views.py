@@ -20,6 +20,9 @@ def send_money(user0,user1):
 	for user in user1:
 		userLost('55fda9d43c3ce2100041183e',user.amount)
 
+def send_to_charity(user, amount):
+	userLost('55fda9d43c3ce2100041183e',amount)
+
 @login_required(login_url='/')
 def congrats(request):
 	return render(request,'frontend/congrats.html', context_instance=RequestContext(request,{}))
@@ -128,14 +131,13 @@ def manage(request, league_id):
 	if request.method == 'POST':
 		random.seed(datetime.time.second)
 		winner = random.randint(0,len(bets))
-		user1 = bets[winner].user
 		for i, bet in enumerate(bets):
 			if i == winner:
 				bet.result = "You won!"
 			else:
 				bet.result = "You lost"
-				user0 = bet.user
-				send_money(user0,user1)
+				user = bet.user
+				send_to_charity(user,league.amount)
 
 	return render(request, 'frontend/manage.html', context_instance=RequestContext(request, {'error': error, 'bets':bets}))
 
