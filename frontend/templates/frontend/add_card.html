@@ -1,0 +1,35 @@
+<html>
+<head>
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'frontend/style.css' %}">
+	<!-- <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> -->
+</head>
+<body>
+	<div class="user">
+		<span>Hi {{user.username}}</span><br> 
+		<a href="\logout\">
+			Logout
+		</a>
+	</div>
+	<div class="back">
+		<a href="/bet/">Back</a>
+	</div>
+	<div class="centerbox">
+		<h1 class="title">
+			Please enter your credit card information
+		</h1>
+		<form method="post">
+			<p>{% csrf_token %}</p>
+			<div class="inputs">
+			    {{ form }}
+				<!-- <select name="headsortails">
+					<option value="heads">Heads</option>
+					<option value="tails">Tails</option>
+				</select> -->
+				<input type="submit" value="Add Card" class="placebet-btn btn"/>
+			</div>
+			<div class="error">{{ error }}</div>
+		</form>
+	</div>
+</body>
+</html>
