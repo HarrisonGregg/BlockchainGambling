@@ -3,4 +3,4 @@ from .models import League,BetData,User
 # Register your models here.
 admin.site.register(League)
 admin.site.register(BetData)
-admin.site.register(User)
+# admin.site.register(User)
