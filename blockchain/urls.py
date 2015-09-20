@@ -24,7 +24,8 @@ urlpatterns = [
     url(r'^join/(?P<league_name>.*)/$', 'frontend.views.joinLeague', name='joinLeague'),
     url(r'^bet/$', 'frontend.views.bet', name='bet'),
     url(r'^logout/$', 'frontend.views.logout_view', name='logout'),
-
-    url(r'', include('blockchain_gambler.urls')),
+    url(r'^result/$','frontend.views.result',name='result'),
+    url(r'^congrats/$','frontend.views.congrats',name='congrats'),
+    #url(r'', include('blockchain_gambler.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]

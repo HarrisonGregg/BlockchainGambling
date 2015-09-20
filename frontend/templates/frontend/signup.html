@@ -3,12 +3,13 @@
 	{% load staticfiles %}
 	<link rel="icon" type="image/png" sizes="16x16" href="{% static 'frontend/favicon.png' %}">
 	<link rel="stylesheet" href="{% static 'frontend/style.css' %}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{% static 'frontend/favicon.png' %}">
 	<title>FundLeague - Sign Up</title>
 </head>
 <body>
 	<div class="centerbox">
 		<h1 class="title">
-			Join a League
+			Your Bet Result
 		</h1>
 		<form method="post">
 			<p>{% csrf_token %}</p>
@@ -23,6 +24,10 @@
 				Sign in
 			</div>
 		</a>
+		<div>
+			<p>
+			</p>
+		</div>	
 	</div>
 </body>
 </html>
