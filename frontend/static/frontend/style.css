@@ -137,3 +137,20 @@ a {
 	color: #F6F6F6;
 	text-align: center;
 }
+.congrats {
+	text-align: center;
+}
+.back {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+}
+.see-result {
+	color: blue;
+}
+.pending {
+	color: purple;
+}
+.run-btn {
+	border: none;
+}

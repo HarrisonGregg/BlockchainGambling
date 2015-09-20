@@ -21,6 +21,7 @@ class Bet(models.Model):
 		return self.league.name + ":" + self.user.username
 
 	campaign = models.TextField()
+	result = models.TextField(default="")
 
 class BetData(models.Model):
 	username = models.CharField(max_length = 200)
