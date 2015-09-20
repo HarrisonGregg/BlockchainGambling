@@ -151,6 +151,7 @@ def manage(request, league_id):
 				bet.result = "You lost"
 				user = bet.user
 				send_to_charity(user,league.fee)
+			bet.save()
 
 	return render(request, 'frontend/manage.html', context_instance=RequestContext(request, {'error': error, 'bets':bets}))
 
