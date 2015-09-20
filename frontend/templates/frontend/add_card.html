@@ -16,34 +16,19 @@
 	</div>
 	<div class="centerbox">
 		<h1 class="title">
-			Hi {{user.username}}. 
-			<br>
-			Would you like to place a bet?
+			Please enter your credit card information
 		</h1>
-		<!-- <form method="post">
-			<p>{% csrf_token %}</p>
-			<div class="inputs">
-			    {{ form }}
-				<select name="headsortails">
-					<option value="heads">Heads</option>
-					<option value="tails">Tails</option>
-				</select>
-				<input type="submit" value="Place Bet" class="placebet-btn btn"/>
-			</div>
-			<div class="error">{{ error }}</div>
-		</form> -->
-		<div class='league-list'>
-			<h3>League Members:</h3>
-			{% for bet in bets %}
-				<div>{{bet.user.username}}</div>
-			{% endfor %}
-		</div>
-		<br>
 		<form method="post">
 			<p>{% csrf_token %}</p>
 			<div class="inputs">
-				<input type="submit" value="Run Lottery" class="run-btn btn">
+			    {{ form }}
+				<!-- <select name="headsortails">
+					<option value="heads">Heads</option>
+					<option value="tails">Tails</option>
+				</select> -->
+				<input type="submit" value="Add Card" class="placebet-btn btn"/>
 			</div>
+			<div class="error">{{ error }}</div>
 		</form>
 	</div>
 </body>

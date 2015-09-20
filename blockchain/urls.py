@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^join/$', 'frontend.views.join', name='join'),
     url(r'^join/(?P<league_name>.*)/$', 'frontend.views.joinLeague', name='joinLeague'),
     url(r'^bet/$', 'frontend.views.bet', name='bet'),
+    url(r'^add_card/$', 'frontend.views.add_card', name='add_card'),
     url(r'^logout/$', 'frontend.views.logout_view', name='logout'),
     url(r'^result/$','frontend.views.result',name='result'),
     url(r'^result/(?P<bet_id>.*)/$','frontend.views.betResult',name='betResult'),

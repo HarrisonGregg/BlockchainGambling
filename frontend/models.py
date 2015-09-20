@@ -3,6 +3,10 @@ from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 
+class CreditCard(models.Model):
+	user = models.OneToOneField(User)
+	number = models.CharField(max_length = 200,null = False)
+
 # Create your models here.
 class League(models.Model):
 	name = models.CharField(max_length=32, unique=True)

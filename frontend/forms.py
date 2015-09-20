@@ -21,10 +21,10 @@ class JoinForm(forms.Form):
 	league_name = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': 'League Name'}))
 	campaign = forms.URLField(label="", widget=forms.TextInput(attrs={'placeholder': 'Campaign URL'}))
 
-class BetForm(forms.Form):
+class AddCardForm(forms.Form):
 	auto_id = False
 	first_name = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder' : 'First Name'}))
 	last_name = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder' : 'Last Name'}))
 	credit_number = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder' : 'Credit Card Number'})) 
-	amount = forms.DecimalField(label="",decimal_places=2,widget=forms.NumberInput(attrs={'placeholder': 'Bet Amount(USD)', 'min': '0.01', 'step': '0.01'}))
-	choice = forms.ChoiceField(label="Gamble Choice", choices=[('Heads','heads'),('Tails','tails')])
+	# amount = forms.DecimalField(label="",decimal_places=2,widget=forms.NumberInput(attrs={'placeholder': 'Bet Amount(USD)', 'min': '0.01', 'step': '0.01'}))
+	# choice = forms.ChoiceField(label="Gamble Choice", choices=[('Heads','heads'),('Tails','tails')])

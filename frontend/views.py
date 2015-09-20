@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.template import RequestContext
 from .forms import *
 from .models import *
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -14,11 +14,12 @@ from .hash_credit_card import hash_credit_card
 import random, datetime
 from .donate import userWin,userLost
 
-def send_money(user0,user1):
-	for user in user0:
-		userWin(user.credit_number,user.amount)
-	for user in user1:
-		userLost('55fda9d43c3ce2100041183e',user.amount)
+# def send_money(user0,user1):
+# 	for user in user0:
+# 		card = CreditCard.objects.get(user=user)
+# 		userWin(card.number,user.amount)
+# 	for user in user1:
+# 		userLost('55fda9d43c3ce2100041183e',user.amount)
 
 def send_to_charity(user, amount):
 	userLost('55fda9d43c3ce2100041183e',amount)
@@ -49,23 +50,29 @@ def betResult(request, bet_id):
 @login_required(login_url='/')
 def bet(request):
 	error = ''
-	if request.method == 'POST':
-		username = request.user.username
-		first_name = request.POST.get("first_name","None")
-		last_name = request.POST.get("last_name","None")
-		credit_number = hash_credit_card(request.POST.get("credit_number","None"),'frontend/account_list.txt')
-		amount = request.POST.get("amount","None")
-		choice = request.POST.get("choice","None")
-		bet_data = BetData(username=username,first_name=first_name,last_name=last_name,credit_number=credit_number,amount=amount,choice=choice)
-		bet_data.save()
-		#print(credit_number)
-		payToServer(credit_number,amount)
-		return HttpResponseRedirect('/congrats/')
-	form = BetForm()
 	bets = Bet.objects.filter(user=request.user)
 
 	leagues = League.objects.filter(admin=request.user)
-	return render(request, 'frontend/bet.html', context_instance=RequestContext(request, {'form':form, 'error':error, 'bets':bets, 'leagues':leagues}))
+	return render(request, 'frontend/bet.html', context_instance=RequestContext(request, {'error':error, 'bets':bets, 'leagues':leagues}))
+
+@login_required(login_url='/')
+def add_card(request):
+	error = ''
+	if request.method == 'POST':
+		user = request.user
+		user.first_name = request.POST.get("first_name","None")
+		user.last_name = request.POST.get("last_name","None")
+		card = None
+		try:
+			card = CreditCard.objects.get(user=user)
+		except:
+			card = CreditCard(number=hash_credit_card(request.POST.get("credit_number","None"),'frontend/account_list.txt'), user=user)
+			card.save()
+		user.save()
+		return HttpResponseRedirect('/bet/')
+	form = AddCardForm()
+
+	return render(request, 'frontend/add_card.html', context_instance=RequestContext(request, {'form':form, 'error':error}))
 
 @login_required(login_url='/')
 def logout_view(request):
@@ -111,11 +118,17 @@ def joinLeague(request, league_name):
 		campaign = request.POST.get("campaign", None)
 		if league_name and campaign:
 			try:
-				league = League.objects.get(name=league_name)
-				bet = Bet(league=league, user=request.user, campaign=campaign) 
-				bet.save()
-				return HttpResponseRedirect("/bet/")
-			except DoesNotExist:
+				try:
+					card = CreditCard.objects.get(user=request.user)
+					league = League.objects.get(name=league_name)
+					bet = Bet(league=league, user=request.user, campaign=campaign) 
+					bet.save()
+					payToServer(card.number,league.fee)
+
+					return HttpResponseRedirect("/bet/")
+				except (CreditCard.DoesNotExist):
+					error = "Please add a credit card"
+			except League.DoesNotExist:
 				error = "League not found."
 		else:
 			error = "Please enter a valid team and GoFundMe URL"
@@ -137,7 +150,8 @@ def manage(request, league_id):
 			else:
 				bet.result = "You lost"
 				user = bet.user
-				send_to_charity(user,league.amount)
+				send_to_charity(user,league.fee)
+			bet.save()
 
 	return render(request, 'frontend/manage.html', context_instance=RequestContext(request, {'error': error, 'bets':bets}))
 
@@ -147,8 +161,8 @@ def signup(request):
 		username = request.POST.get("username", None)
 		email = request.POST.get("email", None)
 		password = request.POST.get("password", None)
-		if username and email and password and league_name:
-			user = User(username=username, email=email, password=password)
+		if username and email and password:
+			user = User.objects.create_user(username=username, email=email, password=password)
 			try:
 				user.save()
 				return HttpResponseRedirect("/")
