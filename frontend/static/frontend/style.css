@@ -18,6 +18,15 @@ body {
 	background: #73A600;
 	font-family: 'Montserrat', sans-serif;
 }
+.user {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	text-align: right;
+}
+.user a {
+	color: #666666;
+}
 .centerbox {
 	width: 400px;
 	/*height: 400px;*/
@@ -55,9 +64,13 @@ body {
 	margin-bottom: 10px;
 }
 h1 {
+	color: #666666;
 	text-align: center;
 	margin: 0;
 	font-size: 24px;
+}
+.league-list {
+	text-align: center;
 }
 .btn {
 	background: #F4A631;
@@ -75,6 +88,10 @@ h1 {
 	margin-top: 20px;
 	color: #F6F6F6;
 	border-radius: 5px;
+}
+div.btn {
+	border-radius: 5px;
+	border: none;
 }
 .input-div {
 	margin: 20px 0;

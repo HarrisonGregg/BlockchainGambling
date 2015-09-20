@@ -3,9 +3,15 @@
 	{% load staticfiles %}
 	<link rel="icon" type="image/png" sizes="16x16" href="{% static 'frontend/favicon.png' %}">
 	<link rel="stylesheet" href="{% static 'frontend/style.css' %}">
-	<title>FundLeague - Sign Up</title>
+	<title>FundLeague - Join League</title>
 </head>
 <body>
+	<div class="user">
+		<span>Hi {{user.username}}</span><br> 
+		<a href="\logout\">
+			Logout
+		</a>
+	</div>
 	<div class="centerbox">
 		<h1 class="title">
 			Join a League
@@ -13,14 +19,14 @@
 		<form method="post">
 			<p>{% csrf_token %}</p>
 			<div class="inputs">
-			    {{ form }}
-				<input type="submit" value="Join" class="signup-btn btn"/>
+				{{ form }}
+				<input type="submit" value="Join" class="join-btn btn"/>
 			</div>
 			<div class="error">{{ error }}</div>
 		</form>
-		<a href="/">
-			<div class="signin-btn btn gray">
-				Sign in
+		<a href="/start/">
+			<div class="start-btn btn gray">
+				Start a League
 			</div>
 		</a>
 	</div>

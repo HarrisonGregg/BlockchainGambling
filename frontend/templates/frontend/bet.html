@@ -5,27 +5,45 @@
 	<!-- <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> -->
 </head>
 <body>
+	<div class="user">
+		<span>Hi {{user.username}}</span><br> 
+		<a href="\logout\">
+			Logout
+		</a>
+	</div>
 	<div class="centerbox">
 		<h1 class="title">
 			Hi {{user.username}}. 
 			<br>
 			Would you like to place a bet?
 		</h1>
-		<form method="post">
+		<!-- <form method="post">
 			<p>{% csrf_token %}</p>
 			<div class="inputs">
 			    {{ form }}
-<!-- 				<select name="headsortails">
+				<select name="headsortails">
 					<option value="heads">Heads</option>
 					<option value="tails">Tails</option>
-				</select> -->
+				</select>
 				<input type="submit" value="Place Bet" class="placebet-btn btn"/>
 			</div>
 			<div class="error">{{ error }}</div>
-		</form>
-		<a href="/logout/">
-			<div class="signup-btn btn gray">
-				Logout
+		</form> -->
+		<div class='league-list'>
+			<h3>Current Leagues:</h3>
+			{% for bet in bets %}
+				<div>{{bet.league.name}}</div>
+			{% endfor %}
+		</div>
+		<br>
+		<a href="/join/">
+			<div class="join-btn btn">
+				Join a League
+			</div>
+		</a>
+		<a href="/start/">
+			<div class="start-btn btn gray">
+				Start a League
 			</div>
 		</a>
 	</div>
