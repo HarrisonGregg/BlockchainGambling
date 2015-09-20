@@ -3,3 +3,4 @@
 *.html~
 *.swp
 env/
+db.sqlite3
