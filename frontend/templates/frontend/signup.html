@@ -2,31 +2,19 @@
 <head>
 	{% load staticfiles %}
 	<link rel="stylesheet" href="{% static 'frontend/style.css' %}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{% static 'frontend/favicon.png' %}">
 	<title>FundLeague - Sign Up</title>
 </head>
 <body>
 	<div class="centerbox">
 		<h1 class="title">
-			Join a League
+			Your Bet Result
 		</h1>
-		<form method="post">
-			<p>{% csrf_token %}</p>
-			<div class="inputs">
-			    {{ form }}
-				<input type="submit" value="Join" class="signup-btn btn"/>
-			</div>
-			<div class="error">{{ error }}</div>
-		</form>
-		<a href="/">
-			<div class="signin-btn btn gray">
-				Sign in to a league
-			</div>
-		</a>
-		<a href="/start/">
-			<div class="signin-btn btn gray">
-				Start a league
-			</div>
-		</a>
+		<div>
+			<p>
+				Your Bet is successfully placed.
+			</p>
+		</div>	
 	</div>
 </body>
 </html>
