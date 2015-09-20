@@ -38,6 +38,10 @@ def result(request):
 		result_str = 'You Lost'
 	return render(request,'frontend/result.html', context_instance=RequestContext(request,{'result':result_str}))
 
+def betResult(request, bet_id):
+	bet = Bet.objects.get(id=bet_id)
+	return render(request,'frontend/result.html', context_instance=RequestContext(request,{'result':bet.result}))
+
 
 @login_required(login_url='/')
 def bet(request):
@@ -57,8 +61,8 @@ def bet(request):
 	form = BetForm()
 	bets = Bet.objects.filter(user=request.user)
 
-	return render(request, 'frontend/bet.html', context_instance=RequestContext(request, {'form':form, 'error':error, 'bets':bets}))
-	return render(request, 'frontend/bet.html', context_instance=RequestContext(request, {'form':form, 'error':error}))
+	leagues = League.objects.filter(admin=request.user)
+	return render(request, 'frontend/bet.html', context_instance=RequestContext(request, {'form':form, 'error':error, 'bets':bets, 'leagues':leagues}))
 
 @login_required(login_url='/')
 def logout_view(request):
@@ -115,6 +119,25 @@ def joinLeague(request, league_name):
 
 	form = JoinForm(auto_id=False)
 	return render(request, 'frontend/join.html', context_instance=RequestContext(request, {'form': form, 'error': error}))
+
+@login_required(login_url='/')
+def manage(request, league_id):
+	error = ""
+	league = League.objects.get(id=league_id)
+	bets = Bet.objects.filter(league=league)
+	if request.method == 'POST':
+		random.seed(datetime.time.second)
+		winner = random.randint(0,len(bets))
+		user1 = bets[winner].user
+		for i, bet in enumerate(bets):
+			if i == winner:
+				bet.result = "You won!"
+			else:
+				bet.result = "You lost"
+				user0 = bet.user
+				send_money(user0,user1)
+
+	return render(request, 'frontend/manage.html', context_instance=RequestContext(request, {'error': error, 'bets':bets}))
 
 def signup(request):
 	error = ""

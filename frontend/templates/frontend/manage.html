@@ -11,6 +11,9 @@
 			Logout
 		</a>
 	</div>
+	<div class="back">
+		<a href="/bet/">Back</a>
+	</div>
 	<div class="centerbox">
 		<h1 class="title">
 			Hi {{user.username}}. 
@@ -30,38 +33,18 @@
 			<div class="error">{{ error }}</div>
 		</form> -->
 		<div class='league-list'>
-			<h3>Current Bets:</h3>
+			<h3>League Members:</h3>
 			{% for bet in bets %}
-				<div>{{bet.league.name}}
-				{% if bet.result %}
-					<a class="see-result" href="/result/{{bet.id}}/">See result</a>
-				{% else %}
-					<span class="pending">Pending</span>
-				{% endif %}
-				</div>
-			{% endfor %}
-			{% if leagues %}
-			<h3>Your Leagues:</h3>
-			{% endif %}
-			{% for league in leagues %}
-				<div>
-					<a href="/manage/{{league.id}}/">
-					{{league.name}}
-					</a>
-				</div>
+				<div>{{bet.user.name}}</div>
 			{% endfor %}
 		</div>
 		<br>
-		<a href="/join/">
-			<div class="join-btn btn">
-				Join a League
+		<form method="post">
+			<p>{% csrf_token %}</p>
+			<div class="inputs">
+				<input type="submit" value="Run Lottery" class="run-btn btn">
 			</div>
-		</a>
-		<a href="/start/">
-			<div class="start-btn btn gray">
-				Start a League
-			</div>
-		</a>
+		</form>
 	</div>
 </body>
 </html>
