@@ -30,9 +30,9 @@
 			<div class="error">{{ error }}</div>
 		</form> -->
 		<div class='league-list'>
-			<h3>Current Bets:</h3>
+			<h3>Current Leagues:</h3>
 			{% for bet in bets %}
-				<div>{{bet.league.name}}
+				<div>{{bet.league.name}} - ${{bet.league.fee}} 
 				{% if bet.result %}
 					<a class="see-result" href="/result/{{bet.id}}/">See result</a>
 				{% else %}

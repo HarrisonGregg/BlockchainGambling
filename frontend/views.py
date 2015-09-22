@@ -86,9 +86,12 @@ def start(request):
 		name = request.POST.get("name", None)
 		fee = request.POST.get("fee", None)
 		if name and fee:
-			league = League(name=name,fee=fee,admin=request.user)
-			league.save()
-			return HttpResponseRedirect("/join/"+name+"/")
+			try:
+				league = League(name=name,fee=fee,admin=request.user)
+				league.save()
+				return HttpResponseRedirect("/join/"+name+"/")
+			except:
+				error = "League name taken."
 
 	form = StartForm(auto_id=False)
 	return render(request, 'frontend/start.html', context_instance=RequestContext(request, {'form':form, 'error':error}))
@@ -143,15 +146,17 @@ def manage(request, league_id):
 	bets = Bet.objects.filter(league=league)
 	if request.method == 'POST':
 		random.seed(datetime.time.second)
-		winner = random.randint(0,len(bets))
+		winner = random.randint(0,len(bets)-1)
 		for i, bet in enumerate(bets):
 			if i == winner:
-				bet.result = "You won!"
+				bet.result = "You won $" + str(len(bets)*league.fee) + "!"
 			else:
-				bet.result = "You lost"
+				bet.result = "You lost, but your money went to " + bets[winner].campaign + "!"
 				user = bet.user
 				send_to_charity(user,league.fee)
 			bet.save()
+		return HttpResponseRedirect("/bet/")
+
 
 	return render(request, 'frontend/manage.html', context_instance=RequestContext(request, {'error': error, 'bets':bets}))
 
