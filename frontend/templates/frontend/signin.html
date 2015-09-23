@@ -5,8 +5,24 @@
 	<link rel="stylesheet" href="{% static 'frontend/style.css' %}">
 	<!-- <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> -->
 	<title>FundLeague - Sign In</title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script>
+		$(document).ready ( function() {
+			$(".play-btn").click(function(){
+				$(".fullscreen-bg__video_overlay").fadeIn();
+			});
+			$(".fullscreen-bg__video_overlay").on("click", function(){
+				$(".fullscreen-bg__video_overlay").fadeOut();
+			});
+		});
+	</script>
 </head>
 <body>
+	<video id = "Fantacy_Football" class ="fullscreen-bg__video" autoplay muted>
+			<source src ="../../static/frontend/Fantacy_Football.mp4" type = "video/mp4" >
+			<source src ="../Fantacy_Football.ogv" type = "video/ogg">
+			<source src ="../Fantacy_Football.webm" type = "video/webm">
+	</video>
 	<div class="centerbox">
 		<div class="goal">
 			<div class="top">
@@ -14,13 +30,6 @@
 			<br>
 			<div class="bottom">
 			</div>
-		</div>
-		<div class="fullscreen-bg">
-    		<video loop muted autoplay poster="Fantacy_Football.jpg" class="fullscreen-bg__video">
-        	<source src="{% static 'Fantacy_Football.webm' %}" type="video/webm">
-        	<source src="{% static 'Fantacy_Football.mp4' %}" type="video/mp4">
-        	<source src="{% static 'Fantacy_Football.ogv' %}" type="video/ogg">
-    		</video>
 		</div>
 		<h1 class="title">
 			Welcome to 
@@ -40,6 +49,14 @@
 				Sign Up
 			</div>
 		</a>
+		<div class="play-btn">
+			Play
+		</div>
 	</div>
+	<video id = "Fantacy_Football" class ="fullscreen-bg__video_overlay" autoplay muted>
+			<source src ="../../static/frontend/Fantacy_Football.mp4" type = "video/mp4" >
+			<source src ="../Fantacy_Football.ogv" type = "video/ogg">
+			<source src ="../Fantacy_Football.webm" type = "video/webm">
+	</video>
 </body>
 </html>
