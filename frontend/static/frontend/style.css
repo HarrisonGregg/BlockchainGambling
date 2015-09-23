@@ -28,7 +28,23 @@ body {
 	color: #666666;
 }
 
-.fullscreen-bg {
+video#fullscreen-bg__video { 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    background: url(Fantacy_Football.jpg) no-repeat;
+    background-size: cover; 
+}
+
+
+/*.fullscreen-bg {
   position: fixed;
   top: 0;
   right: 0;
@@ -69,6 +85,7 @@ body {
     display: none;
   }
 }
+*/
 
 .centerbox {
 	width: 400px;
