@@ -15,7 +15,7 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 
 body {
-	background: #73A600;
+	background: url(../static/frontend/Fantacy_Football.mp4); /*#73A600;*/
 	font-family: 'Montserrat', sans-serif;
 }
 
