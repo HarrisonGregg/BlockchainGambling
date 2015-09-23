@@ -14,10 +14,11 @@
 
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 
-body {
+/*body {
 	background: #73A600;
 	font-family: 'Montserrat', sans-serif;
 }
+*/
 .user {
 	position: absolute;
 	top: 10px;
