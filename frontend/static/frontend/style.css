@@ -15,7 +15,7 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 
 body {
-	background:#73A600
+	background: #73A600
 	font-family: 'Montserrat', sans-serif;
 }
 
@@ -72,6 +72,7 @@ body {
   .fullscreen-bg__video {
     display: none;
   }
+}
 }
 
 .centerbox {
