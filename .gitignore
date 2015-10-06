@@ -2,5 +2,6 @@
 *.py~
 *.html~
 *.swp
+staticfiles
 env/
 db.sqlite3
