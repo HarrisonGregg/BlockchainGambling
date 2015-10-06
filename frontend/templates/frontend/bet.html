@@ -45,8 +45,9 @@
 			{% endif %}
 			{% for league in leagues %}
 				<div>
-					<a href="/manage/{{league.id}}/">
 					{{league.name}}
+					<a href="/manage/{{league.id}}/">
+						<span class="manage">manage</span>
 					</a>
 				</div>
 			{% endfor %}

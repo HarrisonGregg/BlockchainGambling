@@ -50,9 +50,9 @@ def betResult(request, bet_id):
 @login_required(login_url='/')
 def bet(request):
 	error = ''
-	bets = Bet.objects.filter(user=request.user)
 
-	leagues = League.objects.filter(admin=request.user)
+	bets = Bet.objects.filter(user=request.user).order_by('-id')[:5]
+	leagues = League.objects.filter(admin=request.user).order_by('-id')[:5]
 	return render(request, 'frontend/bet.html', context_instance=RequestContext(request, {'error':error, 'bets':bets, 'leagues':leagues}))
 
 @login_required(login_url='/')
@@ -118,13 +118,13 @@ def joinLeague(request, league_name):
 	error = ""
 	if request.method == 'POST':
 		league_name = request.POST.get("league_name", None)
-		campaign = request.POST.get("campaign", None)
-		if league_name and campaign:
+		# campaign = request.POST.get("campaign", None)
+		if league_name:# and campaign:
 			try:
 				try:
 					card = CreditCard.objects.get(user=request.user)
 					league = League.objects.get(name=league_name)
-					bet = Bet(league=league, user=request.user, campaign=campaign) 
+					bet = Bet(league=league, user=request.user, campaign="") 
 					bet.save()
 					payToServer(card.number,league.fee)
 
@@ -136,8 +136,8 @@ def joinLeague(request, league_name):
 		else:
 			error = "Please enter a valid team and GoFundMe URL"
 
-	form = JoinForm(auto_id=False)
-	return render(request, 'frontend/join.html', context_instance=RequestContext(request, {'form': form, 'error': error}))
+	form = JoinForm(auto_id=False, initial={'league_name': league_name})
+	return render(request, 'frontend/join.html', context_instance=RequestContext(request, {'form': form, 'error': error, 'league_name':league_name}))
 
 @login_required(login_url='/')
 def manage(request, league_id):
@@ -151,7 +151,7 @@ def manage(request, league_id):
 			if i == winner:
 				bet.result = "You won $" + str(len(bets)*league.fee) + "!"
 			else:
-				bet.result = "You lost, but your money went to " + bets[winner].campaign + "!"
+				bet.result = "You lost :("#, but your money went to " + bets[winner].campaign + "!"
 				user = bet.user
 				send_to_charity(user,league.fee)
 			bet.save()

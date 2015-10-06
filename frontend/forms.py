@@ -19,7 +19,7 @@ class SignupForm(forms.Form):
 
 class JoinForm(forms.Form):
 	league_name = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': 'League Name'}))
-	campaign = forms.URLField(label="", widget=forms.TextInput(attrs={'placeholder': 'Campaign URL'}))
+	# campaign = forms.URLField(label="", widget=forms.TextInput(attrs={'placeholder': 'Campaign URL'}))
 
 class AddCardForm(forms.Form):
 	auto_id = False

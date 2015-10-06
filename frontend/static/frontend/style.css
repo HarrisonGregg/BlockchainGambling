@@ -17,6 +17,7 @@
 body {
 	background: #73A600;
 	font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
 }
 
 
@@ -203,8 +204,17 @@ a {
 	color: blue;
 }
 .pending {
-	color: purple;
+	color: black;
 }
 .run-btn {
 	border: none;
+}
+.manage {
+	color: blue;
+}
+.play-btn {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	color: white;
 }
