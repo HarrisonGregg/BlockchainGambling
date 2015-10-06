@@ -10,8 +10,10 @@
 		$(document).ready ( function() {
 			$(".play-btn").click(function(){
 				$(".fullscreen-bg__video_overlay").fadeIn();
+				$("fullscreen-bg__video_overlay").prop("muted",!$(this).prop("muted"));
 			});
 			$(".fullscreen-bg__video_overlay").on("click", function(){
+				$("fullscreen-bg__video_overlay").prop("muted",!$(this).prop("muted"));
 				$(".fullscreen-bg__video_overlay").fadeOut();
 			});
 		});
