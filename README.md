@@ -23,15 +23,15 @@ On upload to GitHub, [Travis CI](https://travis-ci.org/HarrisonGregg/BlockchainG
 1. Fork
 2. Clone
 3. Set up virtual environment in cloned folder
-'''
+```
 python -m virtualenv env
-'''
+```
 4. Install python requirements to virtual environment
-'''
+```
 env/bin/pip install -r requirements.txt
-'''
+```
 5. Start the server on localhost
-'''
+```
 env/bin/python manage.py runserver
-'''
+```
 6. Access at 127.0.0.1:8000
