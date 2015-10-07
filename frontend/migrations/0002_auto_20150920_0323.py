@@ -29,7 +29,11 @@ class Migration(migrations.Migration):
             model_name='user',
             name='user_ptr',
         ),
-        migrations.AlterField(
+        migrations.RemoveField(
+            model_name='league',
+            name='admin',
+        ),
+        migrations.AddField(
             model_name='league',
             name='admin',
             field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
