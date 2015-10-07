@@ -1,9 +1,7 @@
 language: python
 python:
   - "3.4"
-install:
-  -python manage.py install
 script: 
-  trail BlockchainGambling-1
+ -python manage.py test
 
 
