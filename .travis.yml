@@ -1,0 +1,34 @@
+language: python
+
+python:
+  - 3.4
+
+services: postgresql
+
+env:
+  - DJANGO="1.8.4"
+
+before_install:
+  - export DJANGO_SETTINGS_MODULE=blockchain.settings
+  - export PYTHONPATH=$HOME/builds/HarrisonGregg/BlockchainGambling
+  - export PIP_USE_MIRRORS=true
+
+install:
+  - pip install -r requirements.txt
+
+before_script:
+  - psql -c "CREATE DATABASE travisci;" -U postgres
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: Bl2jAWkwIy5Mbd0+//B9bQr9XLHSzyYWrxsemtgnRJGpEEap/MdMID/SiO6YXskXxdI28j3aL/qyml9Fu5xFUc6/vFmZNfRykgfk6gK4E/NO99ml2CwKQxlyArcvuQGS+LxUoyLJOE9+pa3+R8y+79U/qSEJuTpmQP3VHJlLrgsyCgJ69QHWqw9hAhbOIS/zn2riT1okOI4GriDnj5HHf9jH3T+m0YpuTmcE2CfjKYavyjEjF0gFpwn0FPCyMdVj+va7u/KvO0yEpt+bBqdlZ3SeCRJBFsXUK4ow00YdN6o2MeizrMb8bLX8U0oTEmVsM7k76iNdCknjMq8hZWx4//g27Mfyg79kbw3VK5fudm9zSLnynI1qO6kiaXOxzK+nU8d7EuJD5pkNbCfxgTpRKs4We0Wla5NntteUVnbxjVWbZCIGPqgmhRAwNOvUrLrszvkZHc39TSmY28OgzsBoaz6vg/5qrBbRf4+1790Dlqhdz5BwrrWuOG0RHwiV3cojOEE4y+u1/LZwqPrcR1pzQPFhNtWmTnHm7b9SkFGPg+AQ1P43FtBfTLTZBFgt/wguq9sVUpvdzWalZiCTIDxm4OLYCsuoSAyMLg4VzXCbhlxTZUI/XgzvsSwc1cw40VaZaG6pAQLUSzGhclpXXVn4tiVm3JFS8B7DTdwimbbzw8I=
+  app: mighty-journey-2253
+  on:
+    repo: HarrisonGregg/BlockchainGambling
+  run: "python manage.py migrate"
