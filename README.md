@@ -22,7 +22,7 @@ On upload to GitHub, [Travis CI](https://travis-ci.org/HarrisonGregg/BlockchainG
 
 1. Fork
 2. Clone
-3. Set up virtual environment in cloned folder
+3. Create virtual environment in cloned folder (python 3)
 ```
 python -m virtualenv env
 ```
