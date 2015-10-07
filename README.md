@@ -1,4 +1,5 @@
-# BlockchainGambling
+# BlockchainGambling [![Build Status](https://travis-ci.org/HarrisonGregg/BlockchainGambling.svg)](https://travis-ci.org/HarrisonGregg/BlockchainGambling)
+
 This repository is for the Blockchain Gambling project for CS5356.
 
 ### First User Story
