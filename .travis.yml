@@ -21,6 +21,9 @@ install:
 before_script:
   - psql -c "CREATE DATABASE travisci;" -U postgres
 
+script:
+  - python manage.py test
+
 notifications:
   email:
     on_success: change
