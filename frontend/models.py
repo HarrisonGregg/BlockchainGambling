@@ -27,14 +27,6 @@ class GameBet(models.Model):
 
 class Bet(models.Model):
 	league = models.ForeignKey(League)
-	user = models.ForeignKey(User)
-	campaign = models.URLField()
-
-	def __str__(self):
-		return self.league.name + ":" + self.user.username
-
-	campaign = models.TextField()
-	result = models.TextField(default="")
 
 class BetData(models.Model):
 	username = models.CharField(max_length = 200)
