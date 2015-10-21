@@ -154,7 +154,7 @@ div.btn {
 .input-div:first-child {
 	margin: 0;
 }
-input[type="text"],input[type="number"],input[type="password"] {
+input[type="text"],input[type="number"],input[type="password"],input[type="email"] {
 	padding: 10px;
 	text-align: center;
 	width: 100%;
