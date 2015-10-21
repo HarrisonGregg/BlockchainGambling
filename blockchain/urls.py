@@ -19,6 +19,8 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^$', 'frontend.views.signin', name='signin'),
     url(r'^start/$', 'frontend.views.start', name='start'),
+    url(r'^updateNBAteams/$', 'scraper.views.updateNBAteams', name='updateNBAteams'),
+    url(r'^updateNBAgames/$', 'scraper.views.updateNBAgames', name='updateNBAgames'),
     url(r'^signup/$', 'frontend.views.signup', name='signup'),
     url(r'^join/$', 'frontend.views.join', name='join'),
     url(r'^join/(?P<league_name>.*)/$', 'frontend.views.joinLeague', name='joinLeague'),
