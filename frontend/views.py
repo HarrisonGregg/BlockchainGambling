@@ -51,9 +51,13 @@ def betResult(request, bet_id):
 def bet(request):
 	error = ''
 
-	bets = Bet.objects.filter(user=request.user).order_by('-id')[:5]
-	leagues = League.objects.filter(admin=request.user).order_by('-id')[:5]
-	return render(request, 'frontend/bet.html', context_instance=RequestContext(request, {'error':error, 'bets':bets, 'leagues':leagues}))
+	teams = Team.objects.all()
+
+	if request.method == 'POST':
+		selected_team = get_object_or_404(Team, pk = request.POST.get('team_id'))
+		user.team = selected_team
+		user.save()
+	return render(request, 'frontend/teamhtmlpage.html', context_instance=RequestContext(request, {'error':error, 'teams':team}))
 
 @login_required(login_url='/')
 def add_card(request):
