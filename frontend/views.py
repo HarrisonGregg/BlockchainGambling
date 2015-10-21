@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .models import BetData
+from scraper.models import Team
 from .purchase import payToServer
 from .hash_credit_card import hash_credit_card
 import random, datetime
@@ -57,7 +58,7 @@ def bet(request):
 		selected_team = get_object_or_404(Team, pk = request.POST.get('team_id'))
 		user.team = selected_team
 		user.save()
-	return render(request, 'frontend/teamhtmlpage.html', context_instance=RequestContext(request, {'error':error, 'teams':team}))
+	return render(request, 'frontend/NBApage.html', context_instance=RequestContext(request, {'error':error, 'teams':teams}))
 
 @login_required(login_url='/')
 def add_card(request):

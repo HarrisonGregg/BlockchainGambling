@@ -16,9 +16,10 @@ class League(models.Model):
 	def __str__(self):
 		return self.name
 
-class Bet(models.Model):
-	league = models.ForeignKey(League)
+class Team(models.Model):
 	user = models.ForeignKey(User)
+	team = models.CharField(max_length = 100)
+	league = models.ForeignKey(League)
 	campaign = models.URLField()
 
 	def __str__(self):
