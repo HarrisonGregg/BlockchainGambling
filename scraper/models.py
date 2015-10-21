@@ -13,10 +13,20 @@ class Team(models.Model):
 class Game(models.Model):
 	id = models.IntegerField(primary_key = True)
 	date = models.DateField()
-	home_team = models.ForeignKey(Team, related_name='home_team')
+	# home_team = models.ForeignKey(Team, related_name='home_team')
+	home_team = models.CharField(max_length=200,null=False)
 	home_team_score = models.IntegerField()
-	visit_team = models.ForeignKey(Team, related_name='visit_team')
+	# visit_team = models.ForeignKey(Team, related_name='visit_team')
+	visit_team = models.CharField(max_length=200,null=False)
 	visit_team_score = models.IntegerField()
 
 	def __str__(self):
-		return home_team.name + " vs. " + visit_team.name
+		return str(self.date) + " " + self.home_team + " vs. " + self.visit_team
+
+class UpcomingGame(models.Model):
+	date = models.DateField()
+	home_team = models.CharField(max_length=200,null=False)
+	visit_team = models.CharField(max_length=200,null=False)
+
+	def __str__(self):
+		return str(self.date) + " " + self.home_team + " vs. " + self.visit_team
