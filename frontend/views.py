@@ -8,8 +8,8 @@ from .models import *
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from .models import BetData
-from scraper.models import Team
+from .models import BetData, GameBet
+from scraper.models import Team, Game, UpcomingGame
 from .purchase import payToServer
 from .hash_credit_card import hash_credit_card
 import random, datetime
@@ -47,18 +47,28 @@ def betResult(request, bet_id):
 	bet = Bet.objects.get(id=bet_id)
 	return render(request,'frontend/result.html', context_instance=RequestContext(request,{'result':bet.result}))
 
-
 @login_required(login_url='/')
 def bet(request):
 	error = ''
 
-	teams = Team.objects.all()
+	# teams = Team.objects.all()
+	game_bets = GameBet.objects.filter(acceptor=None).exclude(creator=request.user)
+	my_game_bets = GameBet.objects.filter(creator=request.user)
+	accepted_bets = GameBet.objects.filter(acceptor=request.user)
 
 	if request.method == 'POST':
 		selected_team = get_object_or_404(Team, pk = request.POST.get('team_id'))
 		user.team = selected_team
 		user.save()
-	return render(request, 'frontend/NBApage.html', context_instance=RequestContext(request, {'error':error, 'teams':teams}))
+	# return render(request, 'frontend/NBApage.html', context_instance=RequestContext(request, {'error':error, 'teams':teams}))
+	return render(request, 'frontend/bet.html', context_instance=RequestContext(request, {'error':error, 'game_bets':game_bets, 'my_game_bets':my_game_bets, 'accepted_bets':accepted_bets}))
+
+@login_required(login_url='/')
+def accept_bet(request,bet_id):
+	game_bet = GameBet.objects.get(id=bet_id)
+	game_bet.acceptor = request.user 
+	game_bet.save()
+	return HttpResponseRedirect('/bet/')
 
 @login_required(login_url='/')
 def add_card(request):
@@ -87,19 +97,31 @@ def logout_view(request):
 @login_required(login_url='/')
 def start(request):
 	error = ""
+
+	upcoming_games = UpcomingGame.objects.order_by('date')[:10]
+
 	if request.method == 'POST':
-		name = request.POST.get("name", None)
-		fee = request.POST.get("fee", None)
-		if name and fee:
+		val = request.POST.get("game", None).split(" ",1)
+
+		game_id = val[0]
+		amount = request.POST.get("amount", None)
+		if game_id and amount:
 			try:
-				league = League(name=name,fee=fee,admin=request.user)
-				league.save()
-				return HttpResponseRedirect("/join/"+name+"/")
-			except:
-				error = "League name taken."
+				# league = League(name=name,fee=fee,admin=request.user)
+				# league.save()
+				game = UpcomingGame.objects.get(id=game_id)
+				winning_team = val[1]
+
+				game_bet = GameBet(creator=request.user, game=game, amount=amount, winner=winning_team)
+				game_bet.save()
+				# return HttpResponseRedirect("/join/"+name+"/")
+				return HttpResponseRedirect("/bet/")
+			except Exception as e:
+				# error = "League name taken."
+				error = e
 
 	form = StartForm(auto_id=False)
-	return render(request, 'frontend/start.html', context_instance=RequestContext(request, {'form':form, 'error':error}))
+	return render(request, 'frontend/start.html', context_instance=RequestContext(request, {'form':form, 'error':error, 'upcoming_games':upcoming_games}))
 
 def signin(request):
 	error = ""

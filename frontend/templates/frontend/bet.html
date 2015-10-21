@@ -15,7 +15,7 @@
 		<h1 class="title">
 			Hi {{user.username}}. 
 			<br>
-			Would you like to place a bet?
+			Would you like to make or accept a bet?
 		</h1>
 		<!-- <form method="post">
 			<p>{% csrf_token %}</p>
@@ -30,37 +30,58 @@
 			<div class="error">{{ error }}</div>
 		</form> -->
 		<div class='league-list'>
-			<h3>Current Leagues:</h3>
-			{% for bet in bets %}
-				<div>{{bet.league.name}} - ${{bet.league.fee}} 
-				{% if bet.result %}
-					<a class="see-result" href="/result/{{bet.id}}/">See result</a>
-				{% else %}
-					<span class="pending">Pending</span>
-				{% endif %}
-				</div>
-			{% endfor %}
-			{% if leagues %}
-			<h3>Your Leagues:</h3>
+			{% if game_bets %}
+			<h3>Available Bets:</h3>
 			{% endif %}
-			{% for league in leagues %}
-				<div>
-					{{league.name}}
-					<a href="/manage/{{league.id}}/">
-						<span class="manage">manage</span>
-					</a>
+			{% for bet in game_bets %}
+				<div>{{bet}}:
+					<br/>
+					<b>{{bet.creator.username}}</b> bets ${{bet.amount}} that {{bet.winner}} will win. 
+				<!-- {% if bet.result %} -->
+					<!-- <a class="see-result" href="/result/{{bet.id}}/">See result</a> -->
+				<!-- {% else %} -->
+					<a href="/accept_bet/{{bet.id}}/" class="accept">Accept Bet</a>
+				<!-- {% endif %} -->
 				</div>
+				<br/>
+			{% endfor %}
+			{% if my_game_bets %}
+			<h3>Your Bets:</h3>
+			{% endif %}
+			{% for bet in my_game_bets %}
+				<div>
+					{{bet}}. {{bet.winner}} will win. 
+					<span class="pending">Pending</span>
+				</div>
+				<!-- <div> -->
+					<!-- {{league.name}} -->
+					<!-- <a href="/manage/{{league.id}}/"> -->
+						<!-- <span class="manage">manage</span> -->
+					<!-- </a> -->
+				<!-- </div> -->
+			{% endfor %}
+
+			{% if accepted_bets %}
+			<h3>Accepted Bets:</h3>
+			{% endif %}
+			{% for bet in accepted_bets %}
+				<div>{{bet}}:
+					<br/>
+					<b>{{bet.creator.username}}</b> bet you ${{bet.amount}} that {{bet.winner}} will win. 
+					<span class="pending">Pending</span>
+				</div>
+				<br/>
 			{% endfor %}
 		</div>
 		<br>
-		<a href="/join/">
+<!-- 		<a href="/join/">
 			<div class="join-btn btn">
 				Join a League
 			</div>
 		</a>
-		<a href="/start/">
-			<div class="start-btn btn gray">
-				Start a League
+ -->		<a href="/start/">
+			<div class="start-btn btn">
+				Make a Bet
 			</div>
 		</a>
 		<a href="/add_card/">

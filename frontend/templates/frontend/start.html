@@ -3,7 +3,7 @@
 	{% load staticfiles %}
 	<link rel="icon" type="image/png" sizes="16x16" href="{% static 'frontend/favicon.png' %}">
 	<link rel="stylesheet" href="{% static 'frontend/style.css' %}">
-	<title>FundLeague - Start League</title>
+	<title>BlockLeague - Make Bet</title>
 </head>
 <body>
 	<div class="back">
@@ -11,17 +11,23 @@
 	</div>
 	<div class="centerbox">
 		<h1 class="title">
-			Start a League
+			Make a Bet
 		</h1>
 		<form method="post">
 			<p>{% csrf_token %}</p>
 			<div class="inputs">
+				<select name="game">
+				{% for game in upcoming_games %}
+				    <option value="{{ game.id }} {{game.home_team}}">{{ game.date }} {{ game.home_team }} will beat {{ game.visit_team }}</option>
+				    <option value="{{ game.id }} {{game.visit_team}}">{{ game.date }} {{ game.visit_team }} will beat {{ game.home_team }}</option>
+				{% endfor %}
+				</select>
 			    {{ form }}
-				<input type="submit" value="Start" class="signup-btn btn"/>
+				<input type="submit" value="Bet" class="signup-btn btn"/>
 			</div>
 			<div class="error">{{ error }}</div>
 		</form>
-		<a href="/">
+<!-- 		<a href="/">
 			<div class="signin-btn btn gray">
 				Sign in to a league 
 			</div>
@@ -31,6 +37,6 @@
 				Join a league 
 			</div>
 		</a>
-	</div>
+ -->	</div>
 </body>
 </html>

@@ -83,7 +83,7 @@ body {
 }
 
 .centerbox {
-	width: 400px;
+	width: 600px;
 	/*height: 400px;*/
 	/*margin: -200px 0 0 -150px;*/
 	-webkit-transform: translate(-50%, -50%);
@@ -124,7 +124,7 @@ h1 {
 	margin: 0;
 	font-size: 24px;
 }
-.league-list {
+.league-list h3{
 	text-align: center;
 }
 .btn {
@@ -154,7 +154,7 @@ div.btn {
 .input-div:first-child {
 	margin: 0;
 }
-input {
+input[type="text"],input[type="number"] {
 	padding: 10px;
 	text-align: center;
 	width: 100%;
@@ -164,6 +164,9 @@ input {
 	border-bottom: none;
 	font-size: 20px;
 	background: #F6F6F6;
+}
+input[type="submit"] {
+	width: 100%;
 }
 select {
 	padding: 10px;
@@ -217,4 +220,10 @@ a {
 	right: 10px;
 	bottom: 10px;
 	color: white;
+}
+.accept {
+	color: blue;
+}
+b {
+	color: black;
 }

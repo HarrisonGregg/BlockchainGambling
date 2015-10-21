@@ -7,8 +7,11 @@ class SigninForm(forms.Form):
 
 class StartForm(forms.Form):
 	auto_id = False
-	name = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': 'League Name'}))
-	fee = forms.DecimalField(label="",decimal_places=2,widget=forms.NumberInput(attrs={'placeholder': 'Entree Fee', 'min': '0.01', 'step': '0.01'}))
+	# name = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': 'League Name'}))
+	amount = forms.DecimalField(label="",decimal_places=2,widget=forms.NumberInput(attrs={'placeholder': 'Amount', 'min': '0.01', 'step': '0.01'}))
+	# CHOICES = (('home', 'Home',), ('away', 'Away',))
+	# winner = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+	# game = forms.SelectField(choices=[])
 
 class SignupForm(forms.Form):
 	auto_id = False 
