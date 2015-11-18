@@ -55,8 +55,9 @@ def updateNBAgames(request):
 			try:
 				if columns[1].li.text != 'vs':
 					continue
-				_other_team = columns[1].find_all('a')[1].text
-				print(_other_team)
+				_other_team_url = columns[1].find_all('a')[1].attrs['href'].split('/')[-1]
+				_other_team = Team.objects.get(prefix2=_other_team_url).name
+				# print(_other_team)
 				_score = [None,None]
 				try:
 					_score = columns[2].a.text.split(' ')[0].split('-')
@@ -65,6 +66,8 @@ def updateNBAgames(request):
 				# _won = True if columns[2].span.text == 'W' else False
 
 				d = datetime.strptime(columns[0].text, '%a, %b %d')
+
+				# print(d, _team, _other_team.name)
 
 				try:
 					id = columns[2].a['href'].split('?id=')[1]
@@ -92,7 +95,7 @@ def updateNBAgames(request):
 
 			except Exception as e:
 				# if str(e) == "'NoneType' object is not subscriptable":
-				# 	raise e
+					# raise e
 				print(e)
 			# except Exception as e:
 			# 	print(e)
