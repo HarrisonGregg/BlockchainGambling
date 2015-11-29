@@ -18,7 +18,7 @@ class TestSigninMethods(TestCase):
 
 		response = signin(request)
 
-		self.assertEqual(response.status_code, 200)
+		self.assertEqual(response.status_code, 400)
 	# def test_nullpassword(self):
 	# 		username = "Haiwei Su"
 	# 		password = ""
