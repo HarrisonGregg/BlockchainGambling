@@ -3,16 +3,16 @@ from django.test import TestCase
 
 class TestSigninMethods(TestCase):
 
-	def test_nullsername(self):
+	# def test_nullsername(self):
 
-		request = {
-			"POST": {
-				"username" = ''
-				"password" = '123456'
-			}
-		}
+		# request = {
+		# 	"POST": {
+		# 		"username" = ''
+		# 		"password" = '123456'
+		# 	}
+		# }
 		
-		self.assertEqual(signin(request), )
+		# self.assertEqual(signin(request), )
 
 	def test_nullpassword(self):
 			username = "Haiwei Su"
@@ -26,13 +26,6 @@ class TestSigninMethods(TestCase):
 			self.assertTrue(username == "")
 			self.assertTrue(password == "")
 
-	def test_both_null(self):
-			username = "       "
-			password = "          "
-			self.assertTrue(username == "       ")
-			self.assertTrue(password == "          ")
-
-	def test_
 
 
 
