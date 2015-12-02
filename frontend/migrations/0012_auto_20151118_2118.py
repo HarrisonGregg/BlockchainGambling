@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='gamebet',
             name='game',
-            field=models.ForeignKey(to='scraper.UpcomingGame'),
+            field=models.ForeignKey(to='scraper.Game'),
         ),
     ]

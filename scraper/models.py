@@ -11,22 +11,22 @@ class Team(models.Model):
 		return self.name
 
 class Game(models.Model):
-	id = models.IntegerField(primary_key = True)
-	date = models.DateField()
-	# home_team = models.ForeignKey(Team, related_name='home_team')
-	home_team = models.CharField(max_length=200,null=False)
-	home_team_score = models.IntegerField()
-	# visit_team = models.ForeignKey(Team, related_name='visit_team')
-	visit_team = models.CharField(max_length=200,null=False)
-	visit_team_score = models.IntegerField()
-
-	def __str__(self):
-		return str(self.date) + " " + self.home_team + " vs. " + self.visit_team
-
-class UpcomingGame(models.Model):
+	gameId = models.IntegerField(null=True)
 	date = models.DateField()
 	home_team = models.CharField(max_length=200,null=False)
+	home_team_score = models.IntegerField(null=True)
 	visit_team = models.CharField(max_length=200,null=False)
+	visit_team_score = models.IntegerField(null=True)
 
 	def __str__(self):
-		return str(self.date) + " " + self.home_team + " vs. " + self.visit_team
+		if self.gameId:
+			return "{0}: {1} {2}, {3} {4}".format(self.date,self.home_team,self.home_team_score,self.visit_team,self.visit_team_score)
+		return "{0}: {1} vs. {2}".format(self.date,self.home_team,self.visit_team)
+
+# class UpcomingGame(models.Model):
+# 	date = models.DateField()
+# 	home_team = models.CharField(max_length=200,null=False)
+# 	visit_team = models.CharField(max_length=200,null=False)
+
+# 	def __str__(self):
+# 		return str(self.date) + " " + self.home_team + " vs. " + self.visit_team

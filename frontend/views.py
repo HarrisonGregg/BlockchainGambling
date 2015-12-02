@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .models import BetData, GameBet
-from scraper.models import Team, Game, UpcomingGame
+from scraper.models import Team, Game
 from .purchase import payToServer
 from .hash_credit_card import hash_credit_card
 import random, datetime
@@ -98,7 +98,7 @@ def logout_view(request):
 def start(request):
 	error = ""
 
-	upcoming_games = UpcomingGame.objects.order_by('date')[:10]
+	upcoming_games = Game.objects.exclude(alias__isnull=True).order_by('date')[:10]
 
 	if request.method == 'POST':
 		val = request.POST.get("game", None).split(" ",1)
@@ -109,7 +109,7 @@ def start(request):
 			try:
 				# league = League(name=name,fee=fee,admin=request.user)
 				# league.save()
-				game = UpcomingGame.objects.get(id=game_id)
+				game = Game.objects.get(id=game_id)
 				winning_team = val[1]
 
 				game_bet = GameBet(creator=request.user, game=game, amount=amount, winner=winning_team)
