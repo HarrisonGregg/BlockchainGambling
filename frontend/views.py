@@ -155,7 +155,7 @@ def signup(request):
 	form = SignupForm(auto_id=False)
 	return render(request, 'frontend/signup.html', context_instance=RequestContext(request, {'form': form, 'error' : error}))
 
-def updateBets(request):
+def updateBets():
 	for bet in GameBet.objects.filter(completed=False,game__date__lte=datetime.date.today()):
 		if bet.game.gameId:
 			bet.completed = True

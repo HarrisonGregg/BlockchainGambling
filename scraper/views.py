@@ -7,8 +7,7 @@ from datetime import datetime, date
 from django.http import HttpResponse
 
 # Create your views here.
-@login_required(login_url='/')
-def updateNBAteams(request):
+def updateNBAteams():
 	url = 'http://espn.go.com/nba/teams'
 	r = requests.get(url)
 	print(r)
@@ -38,8 +37,7 @@ def updateNBAteams(request):
 
 	return HttpResponse("success!")
 
-@login_required(login_url='/')
-def updateNBAgames(request):
+def updateNBAgames():
 	year = 2015
 	BASE_URL = 'http://espn.go.com/nba/team/schedule/_/name/{0}/{2}'
 
