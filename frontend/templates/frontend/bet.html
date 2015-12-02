@@ -13,9 +13,7 @@
 	</div>
 	<div class="centerbox">
 		<h1 class="title">
-			Hi {{user.username}}. 
-			<br>
-			Would you like to make or accept a bet?
+			Make or accept a bet
 		</h1>
 		<!-- <form method="post">
 			<p>{% csrf_token %}</p>
@@ -29,19 +27,16 @@
 			</div>
 			<div class="error">{{ error }}</div>
 		</form> -->
-		<div class='league-list'>
-			{% if game_bets %}
+		<div class='bet-list'>
+			{% if open_bets %}
 			<h3>Available Bets:</h3>
 			{% endif %}
-			{% for bet in game_bets %}
-				<div>{{bet}}:
-					<br/>
-					<b>{{bet.creator.username}}</b> bets ${{bet.amount}} that {{bet.winner}} will win. 
-				<!-- {% if bet.result %} -->
-					<!-- <a class="see-result" href="/result/{{bet.id}}/">See result</a> -->
-				<!-- {% else %} -->
+			{% for bet in open_bets %}
+				<div>
+					<span class="date">{{bet.game.date}}</span>
 					<a href="/accept_bet/{{bet.id}}/" class="accept">Accept Bet</a>
-				<!-- {% endif %} -->
+					<br>
+					${{bet.amount}} - <b>{{bet.creator.username}}</b> thinks {{bet}}.
 				</div>
 				<br/>
 			{% endfor %}
@@ -50,25 +45,38 @@
 			{% endif %}
 			{% for bet in my_game_bets %}
 				<div>
-					{{bet}}. {{bet.winner}} will win. 
-					<span class="pending">Pending</span>
+					<span class="date">{{bet.game.date}}</span>
+					{% if bet.completed %}
+						{% if bet.won %}
+							<span class="won">You won!</span>
+						{% else %}
+							<span class="lost">You lost</span>
+						{% endif %}
+					{% else %}
+						<span class="pending">Pending</span>
+					{% endif %}
+					<br>
+					${{bet.amount}} - {{bet}}
 				</div>
-				<!-- <div> -->
-					<!-- {{league.name}} -->
-					<!-- <a href="/manage/{{league.id}}/"> -->
-						<!-- <span class="manage">manage</span> -->
-					<!-- </a> -->
-				<!-- </div> -->
 			{% endfor %}
 
 			{% if accepted_bets %}
 			<h3>Accepted Bets:</h3>
 			{% endif %}
 			{% for bet in accepted_bets %}
-				<div>{{bet}}:
-					<br/>
-					<b>{{bet.creator.username}}</b> bet you ${{bet.amount}} that {{bet.winner}} will win. 
-					<span class="pending">Pending</span>
+				<div>
+					<span class="date">{{bet.game.date}}</span>
+					{% if bet.completed %}
+						{% if bet.won %}
+							<span class="lost">You lost</span>
+						{% else %}
+							<span class="won">You won!</span>
+						{% endif %}
+					{% else %}
+						<span class="pending">Pending</span>
+					{% endif %}
+					<br>
+					${{bet.amount}} - <b>{{bet.creator.username}}</b> thinks {{bet}}.
 				</div>
 				<br/>
 			{% endfor %}

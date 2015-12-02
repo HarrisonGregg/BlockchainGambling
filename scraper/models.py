@@ -17,7 +17,7 @@ class Game(models.Model):
 	home_team_score = models.IntegerField(null=True)
 	visit_team = models.CharField(max_length=200,null=False)
 	visit_team_score = models.IntegerField(null=True)
-
+	
 	def __str__(self):
 		if self.gameId:
 			return "{0}: {1} {2}, {3} {4}".format(self.date,self.home_team,self.home_team_score,self.visit_team,self.visit_team_score)
