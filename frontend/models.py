@@ -2,7 +2,7 @@ import datetime
 from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
-from scraper.models import Game, UpcomingGame
+from scraper.models import Game
 
 class CreditCard(models.Model):
 	user = models.OneToOneField(User)
@@ -20,12 +20,15 @@ class League(models.Model):
 class GameBet(models.Model):
 	creator = models.ForeignKey(User, related_name='creator')
 	acceptor = models.ForeignKey(User, related_name='acceptor',null=True,blank=True)
-	game = models.ForeignKey(UpcomingGame)
+	game = models.ForeignKey(Game)
 	winner = models.CharField(max_length=200,null=False)
 	amount = models.IntegerField()
+	completed = models.BooleanField(default=False)
+	won = models.BooleanField(default=False)
 
 	def __str__(self):
-		return self.game.__str__()	
+		other = [self.game.home_team,self.game.visit_team][int(self.winner == self.game.home_team)]
+		return self.winner + " will defeat " + other 	
 
 class Bet(models.Model):
 	league = models.ForeignKey(League)

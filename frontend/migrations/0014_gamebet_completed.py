@@ -7,13 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('frontend', '0011_auto_20151118_2102'),
+        ('frontend', '0013_auto_20151202_0423'),
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.AddField(
             model_name='gamebet',
-            name='game',
-            field=models.ForeignKey(to='scraper.Game'),
+            name='completed',
+            field=models.BooleanField(default=False),
         ),
     ]

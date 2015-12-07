@@ -124,7 +124,11 @@ h1 {
 	margin: 0;
 	font-size: 24px;
 }
-.league-list h3{
+.bet-list {
+	max-height: 320px;
+	overflow-y: scroll;
+}
+.bet-list h3{
 	text-align: center;
 }
 .btn {
@@ -208,6 +212,19 @@ a {
 }
 .pending {
 	color: black;
+	float: right;
+}
+.date {
+	color: black;
+}
+.accept, .lost, .won {
+	float: right;
+}
+.won {
+	color: green;
+}
+.lost {
+	color: red;
 }
 .run-btn {
 	border: none;
