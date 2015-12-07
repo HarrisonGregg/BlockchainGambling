@@ -3,37 +3,17 @@ from django.test import TestCase
 
 class TestSigninMethods(TestCase):
 
-	# # def test_nullsername(self):
 
-	# 	# request = {
-	# 	# 	"POST": {
-	# 	# 		"username" = ''
-	# 	# 		"password" = '123456'
-	# 	# 	}
-	# 	# }
-		
-	# 	# self.assertEqual(signin(request), )
-	# def test_signin(self):
-	# 	request = 'fake request'
+    def test_sign_in(self):
+	    """POST sets 'locale' key in session."""
+	    request = RequestFactory().post(
+	        "/sigin/", {"username": "", "password": ""})
+	    request.session = {}
 
-	# 	response = signin(request)
+	    signin(request)
 
-	# 	self.assertEqual(response.status_code, 400)
-	def test_nullpassword(self):
-			username = "Haiwei Su"
-			password = ""
-			self.assertTrue(username == "Haiwei Su")
-			self.assertTrue(password == "")
-
-	def test_null(self):
-			username = ""
-			password = ""
-			self.assertTrue(username == "")
-			self.assertTrue(password == "")
-
-
-
-
+	    self.assertEqual(
+	        request.session["signin"], "username", "password"
 
 
 if __name__ == '__main__':
