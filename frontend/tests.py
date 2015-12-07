@@ -1,5 +1,5 @@
 from .views import signin
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
 
 class TestSigninMethods(TestCase):
 
@@ -14,6 +14,17 @@ class TestSigninMethods(TestCase):
 
 	    self.assertEqual(
 	        request.session["signin"], "username", "password"
+
+	# def test_start(self):
+	# 	"""POST sets 'locale' key in session."""
+	#     request = RequestFactory().post(
+	#         "/sigin/", {"username": "", "password": ""})
+	#     request.session = {}
+
+	#     signin(request)
+
+	#     self.assertEqual(
+	#         request.session["signin"], "username", "password"
 
 
 if __name__ == '__main__':
