@@ -1,29 +1,51 @@
 from .views import signin
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
+from django.contrib.auth.models import AnonymousUser, User
 
 class TestSigninMethods(TestCase):
 
-  def test_nullsername(self):
-      username = ""
-      password = "123456"
-      self.assertTrue(username == "")
-      self.assertTrue(password =="123456")
+	def setUp(self):
+		# Every test needs access to the request factory. 
+		self.factory = RequestFactory()
+		self.user = User.objects.create_user(
+			username = 'haiwei', email = 'haiwei@...', password = 'top_secret')
 
-  def test_nullpassword(self):
-      username = "Haiwei Su"
-      password = ""
-      self.assertTrue(username == "Haiwei Su")
-      self.assertTrue(password == "")
+	def test_details(self):
+		# Create a instance of a GET request. 
+		request = self.factory.get('/customer/details')
 
-  def test_null(self):
-      username = ""
-      password = ""
-      self.assertTrue(username == "")
-      self.assertTrue(password == "")
+		request.user = AnonymousUser()
+
+		# Test views as if it were dpeloyed at /customer/details
+
+		response = views(request)
+		# Use this syntax for class-based views. 
+		response = views.as_view()(request)
+		self.assertEqual(response.status_code, 200)
 
 
+ #    def test_sign_in(self):
+	#     """POST sets 'locale' key in session."""
+	#     request = RequestFactory().post(
+	#         "/sigin/", {"username": "", "password": ""})
+	#     request.session = {}
 
+	#     signin(request)
+
+	#     self.assertEqual(
+	#         request.session["signin"], "username", "password"
+
+	# def test_start(self):
+	# 	"""POST sets 'locale' key in session."""
+	#     request = RequestFactory().post(
+	#         "/sigin/", {"username": "", "password": ""})
+	#     request.session = {}
+
+	#     signin(request)
+
+	#     self.assertEqual(
+	#         request.session["signin"], "username", "password"
 
 
 if __name__ == '__main__':
-    unittest.main()
+		unittest.main()

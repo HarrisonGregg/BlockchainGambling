@@ -62,6 +62,7 @@ def start(request):
 				error = e
 
 	form = StartForm(auto_id=False)
+	# print render(request, 'frontend/start.html', context_instance=RequestContext(request, {'form':form, 'error':error, 'upcoming_games':upcoming_games}))
 	return render(request, 'frontend/start.html', context_instance=RequestContext(request, {'form':form, 'error':error, 'upcoming_games':upcoming_games}))
 
 def signin(request):
