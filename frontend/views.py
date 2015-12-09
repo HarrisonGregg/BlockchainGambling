@@ -158,7 +158,11 @@ def updateBets():
 				pass
 			elif (bet.winner == bet.game.home_team) == (bet.game.home_team_score > bet.game.visit_team_score):
 				bet.won = True
+				send_mail('Congrats!', 'Hi '+bet.creator.username +', congratulations on winning the bets! ', 'blockleagueofficial@gmail.com', [bet.creator.email])
+				send_mail('Sorry!', 'Hi '+bet.acceptor.username +', nice try! Want to bet a second time?! ', 'blockleagueofficial@gmail.com', [bet.acceptor.email])
 			else:
 				bet.won = False
+				send_mail('Sorry!', 'Hi '+bet.creator.username +', nice try! Want to bet a second time?! ', 'blockleagueofficial@gmail.com', [bet.creator.email])
+				send_mail('Congrats!', 'Hi '+bet.acceptor.username +', congratulations on winning the bets! ', 'blockleagueofficial@gmail.com', [bet.acceptor.email])
 			bet.save()
 	return HttpResponse("success!")
