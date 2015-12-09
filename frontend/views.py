@@ -10,6 +10,8 @@ from django.contrib.auth.decorators import login_required
 from .models import BetData, GameBet
 from scraper.models import Team, Game
 import random, datetime
+from django.core.mail import send_mail
+from django.db import IntegrityError
 
 @login_required(login_url='/')
 def congrats(request):
@@ -147,6 +149,7 @@ def signup(request):
 			user = User.objects.create_user(username=username, email=email, password=password)
 			try:
 				user.save()
+				send_mail('Welcome!', 'Hi, welcome to BlockLeague! ', 'blockleagueofficial@gmail.com', ['haiwei93@gmail.com'])
 				return HttpResponseRedirect("/")
 			except IntegrityError:
 				error = "Please choose another name."

@@ -23,6 +23,8 @@ class TestSigninMethods(TestCase):
 		response = views.as_view()(request)
 		self.assertEqual(response.status_code, 200)
 
+	
+
 
  #    def test_sign_in(self):
 	#     """POST sets 'locale' key in session."""
