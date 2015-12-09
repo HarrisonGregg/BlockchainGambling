@@ -13,6 +13,45 @@ import random, datetime
 from django.core.mail import send_mail
 from django.db import IntegrityError
 
+def signin(request):
+	error = ""
+	if request.method == 'POST':
+		user = authenticate(username=request.POST.get("username",""), password=request.POST.get("password",""))
+		if user is not None: 
+			if user.is_active:
+				login(request, user)
+				return HttpResponseRedirect("/bet/")
+		error="Unable to login."
+
+	form = SigninForm(auto_id=False)
+	return render(request, 'frontend/signin.html', context_instance=RequestContext(request, {'form': form, 'error': error}))
+
+
+def signup(request):
+	error = ""
+	if request.method == 'POST':
+		username = request.POST.get("username", None)
+		email = request.POST.get("email", None)
+		password = request.POST.get("password", None)
+		if username and email and password:
+			user = User.objects.create_user(username=username, email=email, password=password)
+			try:
+				user.save()
+				send_mail('Welcome!', 'Hi '+user.username +', welcome to BlockLeague! ', 'blockleagueofficial@gmail.com', [user.email])
+				return HttpResponseRedirect("/")
+			except IntegrityError:
+				error = "Please choose another name."
+		else: 
+			error = "Please fill out all fields."
+
+	form = SignupForm(auto_id=False)
+	return render(request, 'frontend/signup.html', context_instance=RequestContext(request, {'form': form, 'error' : error}))
+
+@login_required(login_url='/')
+def logout_view(request):
+	logout(request)
+	return HttpResponseRedirect("/")
+
 @login_required(login_url='/')
 def bet(request):
 	error = ''
@@ -21,27 +60,10 @@ def bet(request):
 	my_game_bets = GameBet.objects.filter(creator=request.user)
 	accepted_bets = GameBet.objects.filter(acceptor=request.user)
 
-	if request.method == 'POST':
-		selected_team = get_object_or_404(Team, pk = request.POST.get('team_id'))
-		user.team = selected_team
-		user.save()
-
 	return render(request, 'frontend/bet.html', context_instance=RequestContext(request, {'error':error, 'open_bets':open_bets, 'my_game_bets':my_game_bets, 'accepted_bets':accepted_bets}))
 
 @login_required(login_url='/')
-def accept_bet(request,bet_id):
-	game_bet = GameBet.objects.get(id=bet_id)
-	game_bet.acceptor = request.user 
-	game_bet.save()
-	return HttpResponseRedirect('/bet/')
-
-@login_required(login_url='/')
-def logout_view(request):
-	logout(request)
-	return HttpResponseRedirect("/")
-
-@login_required(login_url='/')
-def start(request):
+def make_bet(request):
 	error = ""
 
 	upcoming_games = Game.objects.filter(date__gt=datetime.date.today()).order_by('date')[:10]
@@ -67,88 +89,13 @@ def start(request):
 	# print render(request, 'frontend/start.html', context_instance=RequestContext(request, {'form':form, 'error':error, 'upcoming_games':upcoming_games}))
 	return render(request, 'frontend/start.html', context_instance=RequestContext(request, {'form':form, 'error':error, 'upcoming_games':upcoming_games}))
 
-def signin(request):
-	error = ""
-	if request.method == 'POST':
-		user = authenticate(username=request.POST.get("username",""), password=request.POST.get("password",""))
-		if user is not None: 
-			if user.is_active:
-				login(request, user)
-				return HttpResponseRedirect("/bet/")
-		error="Unable to login."
-
-	form = SigninForm(auto_id=False)
-	return render(request, 'frontend/signin.html', context_instance=RequestContext(request, {'form': form, 'error': error}))
-
 @login_required(login_url='/')
-def join(request):
-	return joinLeague(request,"")
+def accept_bet(request,bet_id):
+	game_bet = GameBet.objects.get(id=bet_id)
+	game_bet.acceptor = request.user 
+	game_bet.save()
+	return HttpResponseRedirect('/bet/')
 
-@login_required(login_url='/')
-def joinLeague(request, league_name):
-	error = ""
-	if request.method == 'POST':
-		league_name = request.POST.get("league_name", None)
-		# campaign = request.POST.get("campaign", None)
-		if league_name:# and campaign:
-			try:
-				try:
-					card = CreditCard.objects.get(user=request.user)
-					league = League.objects.get(name=league_name)
-					bet = Bet(league=league, user=request.user, campaign="") 
-					bet.save()
-					payToServer(card.number,league.fee)
-
-					return HttpResponseRedirect("/bet/")
-				except (CreditCard.DoesNotExist):
-					error = "Please add a credit card"
-			except League.DoesNotExist:
-				error = "League not found."
-		else:
-			error = "Please enter a valid team and GoFundMe URL"
-
-	form = JoinForm(auto_id=False, initial={'league_name': league_name})
-	return render(request, 'frontend/join.html', context_instance=RequestContext(request, {'form': form, 'error': error, 'league_name':league_name}))
-
-@login_required(login_url='/')
-def manage(request, league_id):
-	error = ""
-	league = League.objects.get(id=league_id)
-	bets = Bet.objects.filter(league=league)
-	if request.method == 'POST':
-		random.seed(datetime.time.second)
-		winner = random.randint(0,len(bets)-1)
-		for i, bet in enumerate(bets):
-			if i == winner:
-				bet.result = "You won $" + str(len(bets)*league.fee) + "!"
-			else:
-				bet.result = "You lost :("#, but your money went to " + bets[winner].campaign + "!"
-				user = bet.user
-				send_to_charity(user,league.fee)
-			bet.save()
-		return HttpResponseRedirect("/bet/")
-
-	return render(request, 'frontend/manage.html', context_instance=RequestContext(request, {'error': error, 'bets':bets}))
-
-def signup(request):
-	error = ""
-	if request.method == 'POST':
-		username = request.POST.get("username", None)
-		email = request.POST.get("email", None)
-		password = request.POST.get("password", None)
-		if username and email and password:
-			user = User.objects.create_user(username=username, email=email, password=password)
-			try:
-				user.save()
-				send_mail('Welcome!', 'Hi '+user.username +', welcome to BlockLeague! ', 'blockleagueofficial@gmail.com', [user.email])
-				return HttpResponseRedirect("/")
-			except IntegrityError:
-				error = "Please choose another name."
-		else: 
-			error = "Please fill out all fields."
-
-	form = SignupForm(auto_id=False)
-	return render(request, 'frontend/signup.html', context_instance=RequestContext(request, {'form': form, 'error' : error}))
 
 def updateBets():
 	for bet in GameBet.objects.filter(completed=False,game__date__lte=datetime.date.today()):
@@ -165,4 +112,54 @@ def updateBets():
 				send_mail('Sorry!', 'Hi '+bet.creator.username +', nice try! Want to bet a second time?! ', 'blockleagueofficial@gmail.com', [bet.creator.email])
 				send_mail('Congrats!', 'Hi '+bet.acceptor.username +', congratulations on winning the bets! ', 'blockleagueofficial@gmail.com', [bet.acceptor.email])
 			bet.save()
-	return HttpResponse("success!")
+
+
+# @login_required(login_url='/')
+# def join(request):
+# 	return joinLeague(request,"")
+
+# @login_required(login_url='/')
+# def joinLeague(request, league_name):
+# 	error = ""
+# 	if request.method == 'POST':
+# 		league_name = request.POST.get("league_name", None)
+# 		# campaign = request.POST.get("campaign", None)
+# 		if league_name:# and campaign:
+# 			try:
+# 				try:
+# 					card = CreditCard.objects.get(user=request.user)
+# 					league = League.objects.get(name=league_name)
+# 					bet = Bet(league=league, user=request.user, campaign="") 
+# 					bet.save()
+# 					payToServer(card.number,league.fee)
+
+# 					return HttpResponseRedirect("/bet/")
+# 				except (CreditCard.DoesNotExist):
+# 					error = "Please add a credit card"
+# 			except League.DoesNotExist:
+# 				error = "League not found."
+# 		else:
+# 			error = "Please enter a valid team and GoFundMe URL"
+
+# 	form = JoinForm(auto_id=False, initial={'league_name': league_name})
+# 	return render(request, 'frontend/join.html', context_instance=RequestContext(request, {'form': form, 'error': error, 'league_name':league_name}))
+
+# @login_required(login_url='/')
+# def manage(request, league_id):
+# 	error = ""
+# 	league = League.objects.get(id=league_id)
+# 	bets = Bet.objects.filter(league=league)
+# 	if request.method == 'POST':
+# 		random.seed(datetime.time.second)
+# 		winner = random.randint(0,len(bets)-1)
+# 		for i, bet in enumerate(bets):
+# 			if i == winner:
+# 				bet.result = "You won $" + str(len(bets)*league.fee) + "!"
+# 			else:
+# 				bet.result = "You lost :("#, but your money went to " + bets[winner].campaign + "!"
+# 				user = bet.user
+# 				send_to_charity(user,league.fee)
+# 			bet.save()
+# 		return HttpResponseRedirect("/bet/")
+
+# 	return render(request, 'frontend/manage.html', context_instance=RequestContext(request, {'error': error, 'bets':bets}))

@@ -1,4 +1,4 @@
-from .views import signin, signup, bet, accept_bet
+from .views import signin, signup, bet, accept_bet, updateBets, make_bet
 from .models import GameBet
 from scraper.models import Game
 from django.test import TestCase, RequestFactory
@@ -14,6 +14,13 @@ class TestSigninMethods(TestCase):
 		self.factory = RequestFactory()
 		self.user = User.objects.create_user(username = 'haiwei', email = 'haiwei@...', password = 'top_secret')
 
+		updateNBAteams()
+		updateNBAgames(test=True)
+
+		game = Game.objects.all()[0]
+		bet = GameBet(creator=self.user, game=game, amount=10, winner=game.home_team)
+		bet.save()
+
 	def test_signup(self):
 		request = self.factory.post('/signup/',{"username":"anon","password":"password","email":"anon@example.com"})
 
@@ -27,62 +34,65 @@ class TestSigninMethods(TestCase):
 
 	def test_sign_in(self):
 		request = RequestFactory().post(
-			"/signin/", {"username": "anon123", "password": "password"})
+			"/signin/", {"username": "", "password": ""})
 		request.session = {}
 
 		response = signin(request)
 
 		self.assertEqual(response.status_code, 200)
 
-	# def test_bet(self):
+	def test_bet(self):
+		request = self.factory.get('/bet/')
+		request.user = self.user
+		response = bet(request)
 
-	# 	request = self.factory.get('/bet/')
-	# 	request.user = self.user
-	# 	response = bet(request)
+		self.assertEqual(response.status_code, 200)
 
-	# 	self.assertEqual(response.status_code, 200)
+	def test_scraper(self):
+		updateNBAteams()
+		updateNBAgames(test=True)
 
-	# def test_accept_bet(self):
-	# 	today = date.today()
-	# 	game = Game(date=date, home_team=)
-	# 	bet = GameBet(creator=self.user, game=game, amount=10, winner=game.home_team)
+	def test_accept_bet(self):
+		bet = GameBet.objects.all()[0]
 
-	# 	request = self.factory.post('/bet/',{"username":"anon","password":"password","email":"anon@example.com"})
+		request = self.factory.post('/bet/',{})
+		request.user = self.user
 
-	# 	response = signup(request)
+		response = accept_bet(request, bet.id)
 
-	# 	self.assertEqual(response.status_code, 302)
+		self.assertEqual(response.status_code, 302)
 
-	# 	user = authenticate(username="anon", password="password")
+	def test_make_bet(self):
+		request = self.factory.get('/make_bet/')
+		request.user = self.user
+		response = bet(request)
 
-	# 	self.assertIsNotNone(user)
+		self.assertEqual(response.status_code, 200)
 
+	def test_make_accept_update_bet(self):
+		game = Game.objects.all()[0]
+		request = RequestFactory().post(
+			"/make_bet/", {"game": game.gameId, "amount": 10})
+		request.user = self.user
+		request.session = {}
 
-	# def test_details(self):
-	# 	# Create a instance of a GET request. 
-	# 	request = self.factory.get('/customer/details')
+		response = make_bet(request)
 
-	# 	request.user = AnonymousUser()
+		self.assertEqual(response.status_code, 200)
 
-	# 	# Test views as if it were deployed at /customer/details
+		acceptor = User.objects.create_user(username = 'lel', email = 'kekeke@keke.com', password = 'rofl')
 
-	# 	response = views(request)
-	# 	# Use this syntax for class-based views. 
-	# 	response = views.as_view()(request)
-	# 	self.assertEqual(response.status_code, 200)
+		bet = GameBet.objects.all()[0]
 
+		request = RequestFactory().post(
+			"/accept_bet/"+str(bet.id)+"/", {"game": game.gameId, "amount": 10})
+		request.user = acceptor
 
-	# def test_start(self):
-	# 	"""POST sets 'locale' key in session."""
-	#     request = RequestFactory().post(
-	#         "/sigin/", {"username": "", "password": ""})
-	#     request.session = {}
+		response = accept_bet(request,bet.id)
 
-	#     signin(request)
+		self.assertEqual(response.status_code, 302)
 
-	#     self.assertEqual(
-	#         request.session["signin"], "username", "password"
-
+		updateBets()
 
 if __name__ == '__main__':
 		unittest.main()
