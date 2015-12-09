@@ -29,7 +29,6 @@ urlpatterns = [
     url(r'^accept_bet/(?P<bet_id>.*)/$', 'frontend.views.accept_bet', name='accept_bet'),
     url(r'^logout/$', 'frontend.views.logout_view', name='logout'),
     url(r'^manage/(?P<league_id>.*)/$','frontend.views.manage',name='manage'),
-    url(r'^congrats/$','frontend.views.congrats',name='congrats'),
     #url(r'', include('blockchain_gambler.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
