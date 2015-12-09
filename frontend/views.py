@@ -14,14 +14,6 @@ from django.core.mail import send_mail
 from django.db import IntegrityError
 
 @login_required(login_url='/')
-def congrats(request):
-	return render(request,'frontend/congrats.html', context_instance=RequestContext(request,{}))
-
-def betResult(request, bet_id):
-	bet = Bet.objects.get(id=bet_id)
-	return render(request,'frontend/result.html', context_instance=RequestContext(request,{'result':bet.result}))
-
-@login_required(login_url='/')
 def bet(request):
 	error = ''
 
@@ -135,7 +127,6 @@ def manage(request, league_id):
 				send_to_charity(user,league.fee)
 			bet.save()
 		return HttpResponseRedirect("/bet/")
-
 
 	return render(request, 'frontend/manage.html', context_instance=RequestContext(request, {'error': error, 'bets':bets}))
 

@@ -37,7 +37,7 @@ def updateNBAteams():
 
 	return HttpResponse("success!")
 
-def updateNBAgames():
+def updateNBAgames(test=False):
 	year = 2015
 	BASE_URL = 'http://espn.go.com/nba/team/schedule/_/name/{0}/{2}'
 
@@ -81,6 +81,9 @@ def updateNBAgames():
 				game.visit_team_score = visit_team_score
 
 				game.save()
+
+				if test:
+					return HttpResponse("success!")
 
 			except Exception as e:
 				print(e)
