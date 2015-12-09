@@ -19,6 +19,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^$', 'frontend.views.signin', name='signin'),
     url(r'^make_bet/$', 'frontend.views.make_bet', name='make_bet'),
+    url(r'^start/$', 'frontend.views.make_bet', name='make_bet'),
     url(r'^signup/$', 'frontend.views.signup', name='signup'),
     url(r'^bet/$', 'frontend.views.bet', name='bet'),
     url(r'^accept_bet/(?P<bet_id>.*)/$', 'frontend.views.accept_bet', name='accept_bet'),
