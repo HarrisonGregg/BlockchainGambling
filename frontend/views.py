@@ -140,7 +140,7 @@ def signup(request):
 			user = User.objects.create_user(username=username, email=email, password=password)
 			try:
 				user.save()
-				send_mail('Welcome!', 'Hi, welcome to BlockLeague! ', 'blockleagueofficial@gmail.com', ['haiwei93@gmail.com'])
+				send_mail('Welcome!', 'Hi '+user.username +', welcome to BlockLeague! ', 'blockleagueofficial@gmail.com', [user.email])
 				return HttpResponseRedirect("/")
 			except IntegrityError:
 				error = "Please choose another name."
